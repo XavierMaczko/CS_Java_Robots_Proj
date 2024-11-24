@@ -10,12 +10,31 @@ public class RobotArena {
     private Random RandomInt; // for the random robot locations
     private ArrayList<Robot> robots_list;
 
-    // Constructor for arena, modified for random initializations, then the robot array list.
+    // Constructor for arena, modified for random initialisations, then the robot array list.
     public RobotArena(int size_x, int size_y) {
         this.size_x = size_x;
         this.size_y = size_y;
         this.RandomInt = new Random();
         this.robots_list = new ArrayList<>();
+    }
+    
+    public boolean canMoveHere(int x, int y) {
+        if (x < 1 || x >= size_x-1 || y < 1 || y >= size_y-1) {
+            return false;
+        }
+        
+        for (Robot robot : robots_list) {
+        	if (robot.getX() == x && robot.getY() == y) {
+        		return false;
+        	}
+        }
+        return true;
+    }
+    
+    public void moveAllRobots() {
+    	for (Robot robot : robots_list) {
+    		robot.tryToMove(this);
+    	}
     }
     
     // getWidth() to get the width for the interface

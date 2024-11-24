@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
 * Simple program to show arena with multiple Robots
 * @author shsmchlr
-* with a few addons from myself with the assistance of occasional ChatGPT
+* with a few addons from myself with the occasional assistance of ChatGPT
 */
 public class RobotInterface {
 	
@@ -19,23 +19,48 @@ public class RobotInterface {
 	 */
 	public RobotInterface() {
 		s = new Scanner(System.in); // set up scanner for user input
-		myArena = new RobotArena(20, 6); // create arena of size 20x6
+		myArena = new RobotArena(30, 10); // create arena of size 26x6, note this is the external size
 		
 		char ch = ' ';
 		do {
-			System.out.print("Enter (A)dd Robot, get (I)nformation, (D)isplay Arena, or e(X)it > ");
+			System.out.print("Enter (A)dd Robot, get (I)nformation, (M)ove robots, , A(N)imate the robots, (D)isplay Arena, or e(X)it > ");
 			ch = s.next().charAt(0);
 			s.nextLine();
 			
 			switch (ch) {
 				case 'A':
 				case 'a':
+					Direction randomDirection = Direction.getRandomDirection();
+					Robot newRobot = new Robot(10, 5, randomDirection); 
 					myArena.addRobot(); // add a new Robot to arena
 					break;
 					
 				case 'I':
 				case 'i':
 					System.out.print(myArena.toString()); // display arena details
+					break;
+					
+				case 'M':
+				case 'm':
+					myArena.moveAllRobots();
+					System.out.println("Robots have moved:");
+					System.out.println(myArena.toString());
+					break;
+					
+				case 'N':
+				case 'n':
+					// moves the robots 10 times and displays the result
+					for (int i = 0; i <10; i++) {
+						myArena.moveAllRobots();
+						System.out.println("Move " +(i+1)+ " of 10:");
+						System.out.println(myArena.toString());
+						doDisplay();
+						try {
+							Thread.sleep(200); // 200 ms delay before next display
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
 					break;
 					
 				case 'D':
@@ -65,7 +90,7 @@ public class RobotInterface {
 		int height = myArena.getHeight(); // get the height of the arena
 		
 		// Create a suitable sized ConsoleCanvas object
-		ConsoleCanvas canvas = new ConsoleCanvas(width, height, "12345678");
+		ConsoleCanvas canvas = new ConsoleCanvas(width, height, "32002993");
 		
 		// Call each robot to display itself on the canvas
 		for (Robot robot : myArena.getRobots()) {

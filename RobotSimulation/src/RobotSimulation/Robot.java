@@ -30,6 +30,29 @@ public class Robot {
 		return direction;
 	}
 	
+	public void tryToMove(RobotArena arena) {
+		int newX = x;
+		int newY = y;
+		
+		switch (direction) {
+		case NORTH: newY --; 
+			break;
+		case EAST: newX ++; 
+			break;
+		case SOUTH: newY ++;
+			break;
+		case WEST: newX --;
+			break;
+		}
+		
+		if (arena.canMoveHere(newX, newY)) {
+			x = newX;
+			y = newY;
+		} else {
+			direction = direction.getNextDirection();
+		}
+	}
+	
 	public void move() {
 		switch (direction) {
 		case NORTH:

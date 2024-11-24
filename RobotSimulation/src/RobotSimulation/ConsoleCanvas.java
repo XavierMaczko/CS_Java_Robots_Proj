@@ -9,8 +9,8 @@ public class ConsoleCanvas {
 
     // Constructor for class
     public ConsoleCanvas(int canv_size_x, int canv_size_y, String Stud_ID) {
-        this.canv_size_x = canv_size_x + 2; // Plus 2 for the border
-        this.canv_size_y = canv_size_y + 2;
+        this.canv_size_x = canv_size_x; // Plus 2 for the border
+        this.canv_size_y = canv_size_y;
         this.Stud_ID = Stud_ID;
 
         // Initialises the canvas with correct dimensions
