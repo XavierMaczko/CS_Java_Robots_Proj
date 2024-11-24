@@ -1,5 +1,6 @@
 package RobotSimulation;
 
+import java.io.*;
 import java.util.Scanner;
 
 /**
@@ -23,7 +24,7 @@ public class RobotInterface {
 		
 		char ch = ' ';
 		do {
-			System.out.print("Enter (A)dd Robot, get (I)nformation, (M)ove robots, , A(N)imate the robots, (D)isplay Arena, or e(X)it > ");
+			System.out.print("Enter (A)dd Robot, get (I)nformation, (M)ove robots, , Anima(T)e the robots, (D)isplay Arena, (N)ew Arena, (S)ave Arena, (L)oad Arena, or e(X)it > ");
 			ch = s.next().charAt(0);
 			s.nextLine();
 			
@@ -47,8 +48,8 @@ public class RobotInterface {
 					System.out.println(myArena.toString());
 					break;
 					
-				case 'N':
-				case 'n':
+				case 'T':
+				case 't':
 					// moves the robots 10 times and displays the result
 					for (int i = 0; i <10; i++) {
 						myArena.moveAllRobots();
@@ -68,6 +69,28 @@ public class RobotInterface {
 					doDisplay(); // display the arena visually
 					break;
 					
+				case 'N':
+				case 'n':
+                    // Ask the user for new arena size
+                    System.out.print("Enter new arena width: ");
+                    int newWidth = s.nextInt();
+                    System.out.print("Enter new arena height: ");
+                    int newHeight = s.nextInt();
+                    // Create the new arena with the specified size
+                    myArena = new RobotArena(newWidth, newHeight);
+                    System.out.println("New arena created: " + myArena.toString());
+                    break;	
+                    
+				case 'S':
+				case 's':
+					saveArenaToFile();
+					break;
+				
+				case 'L':
+				case 'l':
+					loadArenaFromFile();
+					break;
+					
 				case 'X':
 				case 'x':
 					ch = 'X'; // when X detected, program ends
@@ -79,6 +102,50 @@ public class RobotInterface {
 		} while (ch != 'X'); // test if end
 		
 		s.close(); // close scanner
+	}
+	
+	private void saveArenaToFile() {
+		// Asks for file name
+		System.out.print("Enter the filename to save : ");
+		String filename = s.nextLine();
+		
+		try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+			writer.write(myArena.toString());
+			System.out.println("Arena saved to " +filename);
+		} catch (IOException e) {
+			System.err.println("Error saving arena : " +e.getMessage());
+		}
+	}
+	
+	private void loadArenaFromFile() {
+		// Asks for file name
+		System.out.print("Enter the filename to load : ");
+		String filename = s.nextLine();
+		
+		try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+			StringBuilder builder = new StringBuilder();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				builder.append(line).append("\n");
+			}
+			
+			String arenaData = builder.toString();
+			System.out.println("Arena loaded from " +filename);
+			
+			myArena = parseArenaFromString(arenaData);
+			System.out.println(myArena.toString());
+		} catch (IOException e) {
+			System.err.println("Error loading arena : " +e.getMessage());
+		}
+	}
+	
+	private RobotArena parseArenaFromString(String arenaData) {
+		String[] lines = arenaData.split("\n");
+		int width = Integer.parseInt(lines[0].split("x")[0].trim());
+		int height = Integer.parseInt(lines[0].split("x")[0].trim());
+		
+		RobotArena newArena = new RobotArena(width, height);
+		return newArena;
 	}
 	
 	/**
