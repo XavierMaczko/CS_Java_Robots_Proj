@@ -52,7 +52,7 @@ public class RobotArena {
                 }
             }
         } while (isTaken);
-        Robot newRobot = new Robot(ran_x, ran_y); 
+        Robot newRobot = new Robot(ran_x, ran_y, Direction.getRandomDirection()); 
         robots_list.add(newRobot);
     }
 

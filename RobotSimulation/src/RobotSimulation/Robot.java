@@ -6,12 +6,15 @@ public class Robot {
 	private int y;
 	private String uniqueID;
 	private static int Robots = 1;
+	private Direction direction; // adding the direction the robot is facing
 	
 	// Constructor for robot
-	public Robot(int x, int y) {
+	public Robot(int x, int y, Direction direction) {
 		this.uniqueID = "R" +Robots++;
 		this.x = x;
 		this.y = y;
+		this.direction = direction;
+		
 	}
 	
 	// Had to make getters for x and y for when checking if position is taken.
@@ -23,20 +26,41 @@ public class Robot {
 		return y;
 	}
 	
+	public Direction getDirection() {
+		return direction;
+	}
+	
+	public void move() {
+		switch (direction) {
+		case NORTH:
+			y--;
+			break;
+		case EAST:
+			x++;
+			break;
+		case SOUTH:
+			y++;
+			break;
+		case WEST:
+			x--;
+			break;
+		}
+	}
+	
 	public void displayRobot(ConsoleCanvas c) {
 		c.showIt(x, y, 'R');
 	}
 	
 	// toString Method
 	public String toString() {
-		return "Robot " +uniqueID+ " is at (" +x+ ", " +y+ ")"; 
+		return "Robot " +uniqueID+ " is at (" +x+ ", " +y+ "), and is facing " +direction; 
 	}
 	
 	public static void main(String[] args) {
-		Robot d = new Robot(5, 3); // creates robot d at position 5, 3
+		Robot d = new Robot(5, 3, Direction.EAST); // creates robot d at position 5, 3
 		System.out.println(d.toString()); // prints the location of the robot
 		
-		Robot e = new Robot(6, 2); // testing for second robot (robot e)
+		Robot e = new Robot(6, 2, Direction.WEST); // testing for second robot (robot e)
 		System.out.println(e.toString()); // its working ! <3
 		
 	}
