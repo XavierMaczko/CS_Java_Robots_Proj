@@ -53,23 +53,6 @@ public class Robot {
 		}
 	}
 	
-	public void move() {
-		switch (direction) {
-		case NORTH:
-			y--;
-			break;
-		case EAST:
-			x++;
-			break;
-		case SOUTH:
-			y++;
-			break;
-		case WEST:
-			x--;
-			break;
-		}
-	}
-	
 	public void displayRobot(ConsoleCanvas c) {
 		c.showIt(x, y, 'R');
 	}

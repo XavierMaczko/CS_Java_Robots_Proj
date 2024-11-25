@@ -11,6 +11,7 @@ public enum Direction {
 		return values()[rand.nextInt(values().length)];
 	}
 	
+	// Returns the next direction that robot will face
 	public Direction getNextDirection() {
 		Direction[] directions = Direction.values();
 		return directions[(this.ordinal() + 1) % directions.length];

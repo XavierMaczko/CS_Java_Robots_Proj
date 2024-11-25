@@ -6,11 +6,11 @@ import java.util.Scanner;
 /**
 * Simple program to show arena with multiple Robots
 * @author shsmchlr
-* with a few addons from myself with the occasional assistance of ChatGPT
+* with a few addons from myself
 */
 public class RobotInterface {
 	
-	private Scanner s; 				// scanner used for input from user
+	private Scanner s; 				// scanner used for finding input from user
 	private RobotArena myArena; 	// arena in which Robots are shown
 	
 	/**
